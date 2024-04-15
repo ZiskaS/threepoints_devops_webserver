@@ -26,7 +26,7 @@ pipeline {
         stage('Construcción del contenedor de Docker') {
             steps {
                 script {
-                    def tag = "devops_ws_${System.currentTimeMillis()}"
+                    def tag = "devops_ws_${new Date().getTime()}"
                     sh "docker build -t devops_ws . --tag $tag"
                 }
             }
