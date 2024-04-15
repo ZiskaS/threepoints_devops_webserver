@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+      - 'feature*'
+      - 'hotfix*'
 
 jobs:
   build:
@@ -18,9 +20,12 @@ jobs:
 
     - name: Crear archivo de credenciales
       run: |
-        cp SRC/credentials.ini.tpl credentials.ini
-        sed -i "s/\${USERNAME}/${{ secrets.USERNAME }}/g" credentials.ini
-        sed -i "s/\${PASSWORD}/${{ secrets.PASSWORD }}/g" credentials.ini
+        cp path/to/credentials.ini.tpl credentials.ini
+        sed -i "s/\${USERNAME}/${USERNAME}/g" credentials.ini
+        sed -i "s/\${PASSWORD}/${PASSWORD}/g" credentials.ini
+      env:
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
 
     - name: Build docker image
       run: |
