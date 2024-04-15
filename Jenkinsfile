@@ -1,12 +1,10 @@
-pipeline {
-    agent any
-    
-    stages {
+stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ZiskaS/threepoints_devops_webserver.git'
+                withCredentials([usernamePassword(credentialsId: 'github-username-password', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    git url: 'https://github.com/ZiskaS/threepoints_devops_webserver.git', branch: 'master', credentialsId: 'github-username-password'
+                }
             }
-        }
         
         stage('Pruebas de SAST') {
             steps {
