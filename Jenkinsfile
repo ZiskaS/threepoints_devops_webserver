@@ -14,15 +14,25 @@ pipeline {
             }
         }
         
-   stage('Creación de archivo de credenciales') {
-    steps {
-        script {
-            sh "sed -e 's/\${USERNAME}/${env.USERNAME}/g' -e 's/\${PASSWORD}/${env.PASSWORD}/g' credentials.ini.tpl > credentials.ini"
+        stage('Creación de archivo de credenciales') {
+            steps {
+                script {
+                    sh "sed -e 's/\${USERNAME}/${env.USERNAME}/g' -e 's/\${PASSWORD}/${env.PASSWORD}/g' credentials.ini.tpl > credentials.ini"
+                }
+            }
         }
-    }
-}
 
-
+        stage('Crear y empujar ramas') {
+            steps {
+                script {
+                    sh "git checkout -b feature/nombre_de_la_feature"
+                    sh "git push origin feature/nombre_de_la_feature"
+                    
+                    sh "git checkout -b hotfix/nombre_del_hotfix"
+                    sh "git push origin hotfix/nombre_del_hotfix"
+                }
+            }
+        }
         
         stage('Construcción del contenedor de Docker') {
             steps {
