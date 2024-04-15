@@ -40,12 +40,4 @@ pipeline {
     triggers {
         cron('@daily') // Opcional, para programar la ejecución periódica del pipeline
     }
-    
-    when {
-        anyOf {
-            branch 'master'
-            branch 'feature*'
-            branch 'hotfix*'
-        }
-    }
 }
