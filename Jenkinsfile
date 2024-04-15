@@ -14,14 +14,15 @@ pipeline {
             }
         }
         
-        stage('Creación de archivo de credenciales') {
-            steps {
-                script {
-                    sh 'sed s/${USERNAME}/@credentials(name=USERNAME,defaultValue=)/ credentials.ini.tpl > credentials.ini'
-                    sh 'sed -i s/${PASSWORD}/@credentials(name=PASSWORD,defaultValue=)/ credentials.ini'
-                }
-            }
+       stage('Creación de archivo de credenciales') {
+    steps {
+        script {
+            sh 'sed "s/${USERNAME}/${{ secrets.USERNAME }}/" credentials.ini.tpl > credentials.ini'
+            sh 'sed -i "s/${PASSWORD}/${{ secrets.PASSWORD }}/" credentials.ini'
         }
+    }
+}
+
         
         stage('Construcción del contenedor de Docker') {
             steps {
